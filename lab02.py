@@ -45,7 +45,7 @@ def get_data():
     # File is closed when the block inside the with statement
     # is done executing
     try:
-        with open('lab02.json', 'r') as json_file:
+        with open('Lab02.json', 'r') as json_file:
             data = json.load(json_file)
 
         return data
