@@ -12,14 +12,25 @@
 import json
 
 def main():
-    data = get_data()
+    option = 0
 
-    # We continue if database was loaded successfully
-    if data:
-        username = input("Username: ")
-        password = input("Password: ")
+    while option != 2:
+        print("Welcome. Please select an option:\n"
+        "1. Login.\n"
+        "2. Exit.\n")
+        option = int(input('> '))
 
-        authenticate(data, username, password)
+        if option == 1:
+            # We continue if database was loaded successfully
+            data = get_data()
+            if data:
+                valid_user = False
+                while not valid_user:
+                    username = input("Username: ")
+                    password = input("Password: ")
+                    valid_user = authenticate(data, username, password)
+                
+                login(username)
 
 def get_data():
     # File is closed when the block inside the with statement
@@ -38,9 +49,26 @@ def authenticate(data, username, password):
     passwords = data['password']
 
     if username in usernames and password in passwords:
-        print("we have a match!")
+        return True
     else:
-        print("error login in.")
+        print("You are not authorized to use the system.\n"
+            "Incorrect username and/or password. Please try again.\n")
+        return False
+
+def login(username):
+    option = 0
+
+    while option != 2:
+        print(f"Wecome to the system {username}. Please select an option:\n"
+            "1. Change password.\n"
+            "2. Logout.\n")
+        option = int(input('> '))
+
+        if option == 1:
+            change_password(username)
+
+def change_password(username):
+    print("You will change your password:\n")
 
 if __name__ == "__main__":
     main()
